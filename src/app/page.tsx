@@ -113,12 +113,19 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
       {/* Header - Sticky */}
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/60 flex-shrink-0 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 md:gap-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 md:gap-4 relative">
           <div className="flex items-center gap-2 md:gap-3">
             <div className="bg-gradient-to-br from-slate-900 to-slate-700 p-1.5 md:p-2 rounded-xl text-white shadow-lg shadow-slate-900/20">
               <LayoutDashboard size={16} className="md:w-[18px] md:h-[18px]" strokeWidth={2.5} />
             </div>
             <h1 className="text-base md:text-lg font-bold text-slate-900 tracking-tight">TSL</h1>
+          </div>
+
+          {/* Centered Text - Hindi */}
+          <div className="flex flex-1 justify-center items-center px-2 md:px-4 min-w-0">
+            <span className="text-sm sm:text-lg md:text-2xl font-bold text-slate-900 tracking-wide whitespace-nowrap overflow-hidden text-ellipsis">
+              ॐ नमः शिवाय
+            </span>
           </div>
 
           <div className="flex items-center gap-2 md:gap-3">
