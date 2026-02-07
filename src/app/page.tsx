@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
+import Image from "next/image";
 import { useBills } from '@/hooks/useBills';
 import { DashboardStats } from '@/components/DashboardStats';
 import { BillForm } from '@/components/BillForm';
@@ -8,7 +9,7 @@ import { BillTable } from '@/components/BillTable';
 import { SearchBar } from '@/components/SearchBar';
 import { DateFilter, DateFilterType } from '@/components/DateFilter';
 import { Bill } from '@/types';
-import { LayoutDashboard, Plus, X } from 'lucide-react';
+import { LayoutDashboard, Plus, X, Printer } from 'lucide-react';
 
 export default function Home() {
   const { bills, addBill, editBill, deleteBill, clearAllBills, isLoaded } = useBills();
@@ -112,26 +113,41 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
       {/* Header - Sticky */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/60 flex-shrink-0 shadow-sm">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/60 flex-shrink-0 shadow-sm print:hidden">
+        {/* Top Image */}
+        <div className="w-full flex justify-center py-2 bg-slate-50/50 border-b border-slate-100">
+          <div className="relative h-16 w-auto aspect-[3/1]">
+            <Image
+              src="/jai-baba-ki.png"
+              alt="Jai Baba Ki"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 md:gap-4 relative">
           <div className="flex items-center gap-2 md:gap-3">
             <div className="bg-gradient-to-br from-slate-900 to-slate-700 p-1.5 md:p-2 rounded-xl text-white shadow-lg shadow-slate-900/20">
               <LayoutDashboard size={16} className="md:w-[18px] md:h-[18px]" strokeWidth={2.5} />
             </div>
-            <h1 className="text-base md:text-lg font-bold text-slate-900 tracking-tight">TSL</h1>
+            <h1 className="text-base md:text-lg font-bold text-slate-900 tracking-tight">
+              TSL - <span className="font-hind">ॐ नमः शिवाय</span>
+            </h1>
           </div>
 
-          {/* Centered Text - Hindi */}
+          {/* Centered Image Placeholder / Spacer */}
           <div className="flex flex-1 justify-center items-center px-2 md:px-4 min-w-0">
-            <span className="text-sm sm:text-lg md:text-2xl font-bold text-slate-900 tracking-wide whitespace-nowrap overflow-hidden text-ellipsis">
-              ॐ नमः शिवाय
-            </span>
+            {/* Image moved to top */}
           </div>
 
           <div className="flex items-center gap-2 md:gap-3">
             <div className="hidden sm:block w-48 md:w-64">
               <SearchBar value={searchTerm} onChange={setSearchTerm} />
             </div>
+
+
+
             <button
               onClick={() => {
                 setEditingBill(undefined);
@@ -152,14 +168,14 @@ export default function Home() {
       </header>
 
       {/* Dashboard Stats - Sticky */}
-      <div className="bg-slate-50 border-b border-slate-200/60 flex-shrink-0">
+      <div className="bg-slate-50 border-b border-slate-200/60 flex-shrink-0 print:hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-3 md:py-4">
           <DashboardStats bills={filteredBills} />
         </div>
       </div>
 
       {/* Filter Bar - Sticky */}
-      <div className="bg-slate-50 border-b border-slate-200/60 flex-shrink-0">
+      <div className="bg-slate-50 border-b border-slate-200/60 flex-shrink-0 print:hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-3">
           <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 p-4 shadow-sm">
             <div className="flex flex-col gap-4">
@@ -226,7 +242,7 @@ export default function Home() {
 
       {/* Form Section - Sticky */}
       {showForm && (
-        <div className="sticky top-16 z-40 bg-slate-50 border-b border-slate-200/60 flex-shrink-0 shadow-md">
+        <div className="sticky top-16 z-40 bg-slate-50 border-b border-slate-200/60 flex-shrink-0 shadow-md print:hidden">
           <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4">
             <BillForm
               onSubmit={handleFormSubmit}
@@ -246,9 +262,19 @@ export default function Home() {
             <h2 className="text-xs md:text-sm font-bold text-slate-700 tracking-tight uppercase">
               Recent Bills
             </h2>
-            <span className="px-2 md:px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-semibold">
-              {filteredBills.length} / {bills.length}
-            </span>
+            <div className="flex items-center gap-2 md:gap-3">
+              <button
+                onClick={() => window.print()}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold transition-all shadow-sm print:hidden group"
+                title="Print List"
+              >
+                <Printer size={14} strokeWidth={2.5} className="text-slate-500 group-hover:text-slate-700 transition-colors" />
+                <span>Print List</span>
+              </button>
+              <span className="px-2 md:px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-semibold">
+                {filteredBills.length} / {bills.length}
+              </span>
+            </div>
           </div>
 
 
